@@ -1,0 +1,32 @@
+<h1>Sign Up</h1>
+
+<%= form_with(model: @user, url: sign_up_path, html: {class: ""}) do |f| %>
+
+  <% if @user.errors.any? %>
+  <div class="alert alert-warning mt-4" role="alert">
+      <% @user.errors.full_messages.each do |message| %>
+        <%= message %>
+      <% end %>
+  </div>
+  <% end %>
+
+    <div class="form-group">
+      <%= f.label :email %>
+      <%= f.email_field :email, placeholder: "Enter your email address", class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password %>
+      <%= f.password_field :password, placeholder: "Enter your password", class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation, placeholder: "Enter your password", class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+          <%= f.submit('Sign Up'.html_safe,
+                class: "btn btn-primary") %>
+    </div>
+<% end %>
