@@ -18,4 +18,7 @@ Rails.application.routes.draw do
   patch "password", to: "passwords#update"
 
   get "/auth/twitter/callback", to: "omniauth_callbacks#twitter"
+
+  resources :twitter_accounts
+  resources :tweets
 end

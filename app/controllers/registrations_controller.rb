@@ -1,4 +1,6 @@
 class RegistrationsController < ApplicationController
+  before_action :set_user_signed, only: [:edit_password_reset, :update_password_reset]
+  
   def new
     @user = User.new
   end
@@ -28,15 +30,11 @@ class RegistrationsController < ApplicationController
   end
 
   def edit_password_reset
-    # this will get the user and confirmed that the token hasnt expired yet
-    # you can call without the ! but it wont throw an exception when token is expired although user will be nil
-    @user = User.find_signed!(params[:token], purpose: "password_reset")
     rescue ActiveSupport::MessageVerifier::InvalidSignature
       redirect_to sign_in_path, alert: "The token has expired. Please try again."
   end
 
   def update_password_reset
-      @user = User.find_signed!(params[:token], purpose: "password_reset")
       if @user.update(password_params)
         redirect_to sign_in_path, notice: "Your password was reset successfully. Please sign in."
       else
@@ -52,5 +50,11 @@ class RegistrationsController < ApplicationController
     def password_params
       # since we are using the model user then params will come with user first
       params.require(:user).permit(:password, :password_confirmation)
+    end
+
+    def set_user_signed
+      # this will get the user and confirmed that the token hasnt expired yet
+      # you can call without the ! but it wont throw an exception when token is expired although user will be nil
+      @user = User.find_signed!(params[:token], purpose: "password_reset")
     end
 end
