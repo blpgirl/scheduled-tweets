@@ -14,12 +14,12 @@
     </ul>
     <ul class="navbar-nav ms-auto my-2 my-lg-0 align-right">
 
-      <% if Current.user %>
-        <li class="nav-item align-self-center mr-3">
-          <%= link_to Current.user.email, edit_password_path %></li>
+      <% if !Current.user %>
         <li class="nav-item mr-3"><%= link_to "Sign Up", sign_up_path, class: "nav-link btn btn-outline-secondary" %></li>
         <li class="nav-item"><%= link_to "Login", sign_in_path, class: "nav-link btn btn-outline-secondary" %></li>
       <% else %>
+        <li class="nav-item align-self-center mr-3">
+          <%= link_to Current.user.email, edit_password_path %></li>
         <li class="nav-item"><%= button_to "Logout", logout_path, method: :delete, class: "btn btn-outline-secondary" %></li>
       <% end %>
     </ul>
