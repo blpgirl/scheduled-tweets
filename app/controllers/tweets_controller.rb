@@ -13,6 +13,9 @@ class TweetsController < ApplicationController
   def create
     @tweet = Current.user.tweets.new(tweet_params)
     if @tweet.save
+      # rails g job Tweet and then in app/jobs/tweet_job.rb
+      # is better to handle it in the model to avoid having to cancel jobs if time changes in update
+      # TweetJob.set(wait_until: @tweet.publish_at).perform_later(@tweet)
       redirect_to @tweet, notice: "Tweet was scheduled successfully."
     else
       render :new

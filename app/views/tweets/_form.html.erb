@@ -20,8 +20,9 @@
 
     <%= f.submit(class: "btn btn-primary") %>
 
+    <!---- Link to because a button_to makes the submit button above submit it instead of the form ---->
     <% if f.object.persisted? %>
-      <%= button_to "Delete", f.object, method: :delete, data: {confirm: "Are you sure?"},
+      <%= link_to "Delete", f.object, method: :delete, data: {confirm: "Are you sure?"},
         class: "ml-3 btn btn-outline-danger" %>
     <% end %>
 <% end %>
